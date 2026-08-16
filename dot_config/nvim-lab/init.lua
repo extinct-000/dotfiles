@@ -5,7 +5,7 @@ print("advent of neovim")
 --
 -- Loading the path env for lsps
 local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
-vim.env.PATH = mason_bin .. ";" .. vim.env.PATH
+vim.env.PATH = mason_bin .. ":" .. vim.env.PATH
 
 -- Some mintue performance tweaks
 -- disable slow runtime plugins
@@ -22,17 +22,17 @@ vim.opt.ttimeoutlen = 10
 -- vim.g.loaded_matchit = 1
 
 -- shell change
-vim.o.shell = "cmd"
+vim.o.shell = vim.env.SHELL or  "/bin/bash"
 -- Explicitly set the clipboard checks
 vim.g.clipboard = {
-	name = "win32yank",
+	name = "wl-clipboard",
 	copy = {
-		["+"] = "win32yank.exe -i --crlf",
-		["*"] = "win32yank.exe -i --crlf",
+		["+"] = "wl-copy",
+		["*"] = "wl-copy",
 	},
 	paste = {
-		["+"] = "win32yank.exe -o --lf",
-		["*"] = "win32yank.exe -o --lf",
+		["+"] = "wl-paste",
+		["*"] = "wl-paste",
 	},
 }
 
