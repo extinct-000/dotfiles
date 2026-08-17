@@ -31,8 +31,8 @@ vim.g.clipboard = {
 		["*"] = "wl-copy",
 	},
 	paste = {
-		["+"] = "wl-paste",
-		["*"] = "wl-paste",
+		["+"] = "wl-paste --no-newline",
+		["*"] = "wl-paste --no-newline",
 	},
 }
 
