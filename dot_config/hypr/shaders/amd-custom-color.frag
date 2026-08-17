@@ -9,7 +9,7 @@ uniform sampler2D tex;
 layout(location = 0) out vec4 fragColor;
 
 // === Tunable parameters (match AMD values) ===
-const float SATURATION = 1.12;   // 112 / 100
+const float SATURATION = 1.60;   // 112 / 100
 const float CONTRAST   = 0.99;   // 99 / 100
 const float BRIGHTNESS = 1.01;   // very slight lift for "1"
 const float HUE_DEG    = 1.0;    // +1 degree
