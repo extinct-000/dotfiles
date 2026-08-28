@@ -22,7 +22,7 @@ vim.opt.ttimeoutlen = 10
 -- vim.g.loaded_matchit = 1
 
 -- shell change
-vim.o.shell = vim.env.SHELL or  "/bin/bash"
+vim.o.shell = vim.env.SHELL or "/bin/bash"
 -- Explicitly set the clipboard checks
 vim.g.clipboard = {
 	name = "wl-clipboard",
@@ -218,8 +218,9 @@ vim.keymap.set("n", "<leader>O", function()
 end)
 
 vim.keymap.set("n", "<leader>rg", ':lua Snacks.terminal("go run " .. vim.fn.expand("%"),{auto_close = false})<CR> ')
-vim.keymap.set("n", "<leader>rp", ':lua Snacks.terminal("py " .. vim.fn.expand("%"),{auto_close = false})<CR> ')
+vim.keymap.set("n", "<leader>rp", ':lua Snacks.terminal("python " .. vim.fn.expand("%"),{auto_close = false})<CR> ')
 vim.keymap.set("n", "<leader>lr", ":lua vim.lsp.buf.rename()<CR> ")
+vim.keymap.set("n", "<leader>ga", ':lua Snacks.terminal("git add -p <C-r><C-f> ",{auto_close = false})<CR> ')
 
 -- Highlight text upon yank
 vim.api.nvim_create_autocmd("TextYankPost", {
