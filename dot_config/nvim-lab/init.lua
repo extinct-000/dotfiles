@@ -219,6 +219,17 @@ end)
 
 vim.keymap.set("n", "<leader>rg", ':lua Snacks.terminal("go run " .. vim.fn.expand("%"),{auto_close = false})<CR> ')
 vim.keymap.set("n", "<leader>rp", ':lua Snacks.terminal("python " .. vim.fn.expand("%"),{auto_close = false})<CR> ')
+vim.keymap.set("n", "<leader>rm", function()
+	local file = vim.fn.expand("%:p")
+	local cwd = vim.fn.getcwd()
+
+	local relative = vim.fn.fnamemodify(file, ":.")
+	local module = relative:gsub("%.py$", ""):gsub("/", ".")
+
+	Snacks.terminal("uv run python -m " .. module, {
+		auto_close = false,
+	})
+end)
 vim.keymap.set("n", "<leader>lr", ":lua vim.lsp.buf.rename()<CR> ")
 vim.keymap.set("n", "<leader>ga", ':lua Snacks.terminal("git add -p <C-r><C-f> ",{auto_close = false})<CR> ')
 
