@@ -252,11 +252,18 @@ vim.api.nvim_create_autocmd("FileType", {
 		local lang = vim.treesitter.language.get_lang(ft)
 
 		if lang then
-			print("Treesitter Started.....")
+			vim.notify(
+				string.format(
+					"🌳✨ Treesitter is ready! 🧩🚀 Buffer #%d is now syntax-aware! ⚡",
+					vim.api.nvim_get_current_buf()
+				),
+				vim.log.levels.INFO
+			)
 			vim.keymap.set("n", "<leader>fm", function()
 				require("conform").format()
 				vim.api.nvim_command("write")
-				print("Formatted via Formatter And Saved")
+
+				vim.notify("✨ Formatted & saved successfully! 💾⚡", vim.log.levels.INFO)
 			end, {
 				desc = "FORMAT via LSP & SAVE",
 			})
@@ -276,7 +283,15 @@ vim.api.nvim_create_autocmd("CursorHold", {
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(ev)
 		local opts = { buffer = ev.buf }
-		print("LspAttach")
+
+		vim.notify(
+			string.format(
+				"🔌✨ LSP connected! 🧠🚀 Buffer #%d is now language-powered! ⚡",
+				vim.api.nvim_get_current_buf()
+			),
+			vim.log.levels.INFO
+		)
+
 		vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
 		vim.keymap.set("v", "<leader>ca", vim.lsp.buf.code_action, opts)
 	end,
