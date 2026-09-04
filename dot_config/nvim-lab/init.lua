@@ -251,23 +251,27 @@ vim.api.nvim_create_autocmd("FileType", {
 		local ft = vim.bo[args.buf].filetype
 		local lang = vim.treesitter.language.get_lang(ft)
 
-		if lang then
+		if not lang then
+			return
+		end
+
+		local ok = pcall(vim.treesitter.start, args.buf, lang)
+
+		if ok then
 			vim.notify(
-				string.format(
-					"🌳✨ Treesitter is ready! 🧩🚀 Buffer #%d is now syntax-aware! ⚡",
-					vim.api.nvim_get_current_buf()
-				),
+				string.format("🌳✨ Treesitter is ready! 🧩🚀 Buffer #%d is now syntax-aware! ⚡", args.buf),
 				vim.log.levels.INFO
 			)
 			vim.keymap.set("n", "<leader>fm", function()
 				require("conform").format()
 				vim.api.nvim_command("write")
 
-				vim.notify("✨ Formatted & saved successfully! 💾⚡", vim.log.levels.INFO)
+				vim.notify("✨ Formatted & Saved Successfully! 💾⚡", vim.log.levels.INFO)
 			end, {
-				desc = "FORMAT via LSP & SAVE",
+				buffer = args.buf,
+				desc = "FORMAT CODE & SAVE",
 			})
-			pcall(vim.treesitter.start, args.buf, lang)
+
 			vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 		end
 	end,
