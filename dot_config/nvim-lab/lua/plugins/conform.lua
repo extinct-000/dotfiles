@@ -16,6 +16,10 @@ return {
 				stylua = {
 
 					prefer_local = true,
+					args = {
+						"--config-path",
+						vim.fn.expand("~/.config/stylua/stylua.toml")("-"),
+					},
 				},
 			},
 			default_format_opts = {
