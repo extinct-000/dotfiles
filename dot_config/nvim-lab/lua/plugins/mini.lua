@@ -23,6 +23,7 @@ return {
 				},
 			})
 			require("mini.surround").setup()
+			require("mini.align").setup()
 			require("mini.cmdline").setup()
 			require("mini.icons").setup()
 			require("mini.pairs").setup()
