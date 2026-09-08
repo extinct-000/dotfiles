@@ -2,12 +2,22 @@
 vim.loader.enable()
 print("advent of neovim")
 
+local runners = {
+
+	python = function(file)
+		return "python " .. vim.fn.shellescape(file)
+	end,
+
+	javascript = function(file)
+		return "node " .. vim.fn.shellescape(file)
+	end,
+}
 --
 -- Loading the path env for lsps
 local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
 vim.env.PATH = mason_bin .. ":" .. vim.env.PATH
 
--- Some mintue performance tweaks
+-- Some minnue performance tweaks
 -- disable slow runtime plugins
 -- vim.g.loaded_netrw = 1
 -- vim.g.loaded_netrwPlugin = 1
@@ -221,8 +231,11 @@ vim.keymap.set("n", "<leader>O", function()
 	vim.api.nvim_feedkeys(vim.keycode(keys), "n", false)
 end)
 
-vim.keymap.set("n", "<leader>rg", ':lua Snacks.terminal("go run " .. vim.fn.expand("%"),{auto_close = false})<CR> ')
-vim.keymap.set("n", "<leader>rp", ':lua Snacks.terminal("python " .. vim.fn.expand("%"),{auto_close = false})<CR> ')
+vim.keymap.set(
+	"n",
+	"<leader>rg",
+	':lua Snacks.terminal("go run " .. vim.fn.expand("%"),{auto_close = false})<CR> '
+)
 vim.keymap.set("n", "<leader>rm", function()
 	local file = vim.fn.expand("%:p")
 	local cwd = vim.fn.getcwd()
@@ -235,7 +248,11 @@ vim.keymap.set("n", "<leader>rm", function()
 	})
 end)
 vim.keymap.set("n", "<leader>lr", ":lua vim.lsp.buf.rename()<CR> ")
-vim.keymap.set("n", "<leader>ga", ':lua Snacks.terminal("git add -p <C-r><C-f> ",{auto_close = false})<CR> ')
+vim.keymap.set(
+	"n",
+	"<leader>ga",
+	':lua Snacks.terminal("git add -p <C-r><C-f> ",{auto_close = false})<CR> '
+)
 
 -- Highlight text upon yank
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -259,7 +276,10 @@ vim.api.nvim_create_autocmd("FileType", {
 
 		if ok then
 			vim.notify(
-				string.format("🌳✨ Treesitter is ready! 🧩🚀 Buffer #%d is now syntax-aware! ⚡", args.buf),
+				string.format(
+					"🌳✨ Treesitter is ready! 🧩🚀 Buffer #%d is now syntax-aware! ⚡",
+					args.buf
+				),
 				vim.log.levels.INFO
 			)
 			vim.keymap.set("n", "<leader>fm", function()
@@ -285,8 +305,10 @@ vim.api.nvim_create_autocmd("CursorHold", {
 })
 
 vim.api.nvim_create_autocmd("LspAttach", {
-	callback = function(ev)
-		local opts = { buffer = ev.buf }
+	callback = function(args)
+		local opts = { buffer = args.buf }
+
+		local lang = vim.treesitter.language.get_lang(vim.bo[args.buf].filetype)
 
 		vim.notify(
 			string.format(
@@ -295,6 +317,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			),
 			vim.log.levels.INFO
 		)
+
+		local runner = runners[lang]
+		if runner then
+			vim.keymap.set("n", "<leader>rp", function()
+				Snacks.terminal(runner(vim.fn.expand("%")), { auto_close = false })
+			end)
+		end
 
 		vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
 		vim.keymap.set("v", "<leader>ca", vim.lsp.buf.code_action, opts)
