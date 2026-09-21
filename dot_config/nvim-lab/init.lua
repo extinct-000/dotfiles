@@ -1,10 +1,15 @@
 -- Hey future Kaish you have to consistentily comment and maintain this init file and please mention things you are forgetting or hard to recall after sometime of inpractice at the end of this file
+-- TODO : 1. Remove the unnecessary old commented codes 
+-- TODO : 2. Write the new <leader>rm language-aware
+-- TODO : 3. Write the runner.lua to populate quickfix using the errorformat
+-- TODO : 4. Remove the unnecessary old commented codes 
+-- TODO : 5. Remove the unnecessary
 vim.loader.enable()
 print("advent of neovim")
 
 local runners = {
 
-	python = function(file)
+	python     = function(file)
 		return "python " .. vim.fn.shellescape(file)
 	end,
 
@@ -15,32 +20,32 @@ local runners = {
 --
 -- Loading the path env for lsps
 local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
-vim.env.PATH = mason_bin .. ":" .. vim.env.PATH
+vim.env.PATH    = mason_bin .. ":" .. vim.env.PATH
 
 -- Some minnue performance tweaks
 -- disable slow runtime plugins
 -- vim.g.loaded_netrw = 1
 -- vim.g.loaded_netrwPlugin = 1
-vim.g.loaded_gzip = 1
-vim.g.loaded_tarPlugin = 1
-vim.g.loaded_zipPlugin = 1
-vim.g.loaded_tohtml = 1
+vim.g.loaded_gzip              = 1
+vim.g.loaded_tarPlugin         = 1
+vim.g.loaded_zipPlugin         = 1
+vim.g.loaded_tohtml            = 1
 vim.g.loaded_tutor_mode_plugin = 1
-vim.opt.shada = "!,'1000,<50,s10,h"
-vim.opt.timeoutlen = 300
-vim.opt.ttimeoutlen = 10
+vim.opt.shada                  = "!,'1000,<50,s10,h"
+vim.opt.timeoutlen             = 300
+vim.opt.ttimeoutlen            = 10
 -- vim.g.loaded_matchit = 1
 
 -- shell change
 vim.o.shell = vim.env.SHELL or "/bin/bash"
 -- Explicitly set the clipboard checks
 vim.g.clipboard = {
-	name = "wl-clipboard",
-	copy = {
+	name          = "wl-clipboard",
+	copy          = {
 		["+"] = "wl-copy",
 		["*"] = "wl-copy",
 	},
-	paste = {
+	paste         = {
 		["+"] = "wl-paste --no-newline",
 		["*"] = "wl-paste --no-newline",
 	},
@@ -170,57 +175,69 @@ vim.lsp.config("lua_ls", {
 -- Explicitly setting the Virtual Environment for the python intepreter this method is done only to save my personal time not recommended
 
 vim.lsp.config("ty", {
-	root_markers = { ".git", "pyproject.toml", "requirements.txt" },
+	root_markers = {
+		".git",
+		"pyproject.toml",
+		"requirements.txt"
+	},
 })
 
 --
 --
 
-local servers = { "lua_ls", "racket_langserver", "rust_analyzer", "ty", "gopls", "vtsls" }
+local servers = {
+	"cssls",
+	"lua_ls",
+	"racket_langserver",
+	"rust_analyzer",
+	"ty",
+	"gopls",
+	"vtsls"
+}
 for i = 1, #servers do
 	vim.lsp.enable(servers[i])
 end
 
 -- making diagnostic inline
 vim.diagnostic.config({
-	virtual_text = {
-		spacing = 2,
-		prefix = "●",
+	virtual_text     = {
+		spacing  = 2,
+		prefix   = "●",
 	},
 
-	signs = true,
-	underline = true,
+	signs            = true,
+	underline        = true,
 	update_in_insert = false,
-	severity_sort = true,
+	severity_sort    = true,
 })
 
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.cursorline = true
-vim.opt.guicursor = table.concat({ "n-v-c:block", "i:block", "r:block" }, ",")
-vim.opt.undofile = true
-vim.opt.signcolumn = "yes:1"
--- vim.opt.statuscolumn = "%l  "
+vim.opt.number           = true
+vim.opt.relativenumber   = true
+vim.opt.cursorline       = true
+vim.opt.guicursor        = table.concat({ "n-v-c:block", "i:block", "r:block" }, ",")
+vim.opt.undofile         = true
+vim.opt.signcolumn       = "yes:1"
+-- vim.opt.statuscolumn  = "%l  "
 
-vim.o.updatetime = 300
-vim.opt.shiftwidth = 4
-vim.opt.clipboard = "unnamedplus"
+vim.o.updatetime         = 300
+vim.opt.shiftwidth       = 4
+vim.opt.clipboard        = "unnamedplus"
 
 vim.keymap.set("n", "<space><space>x", "<cmd>source %<CR>")
-vim.keymap.set("n", "<space>x", ":.lua<CR>")
+vim.keymap.set("n", "<space>x"       , ":.lua<CR>")
 
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
+vim.keymap.set("n", "<C-d>"          , "<C-d>zz")
+vim.keymap.set("n", "<C-u>"          , "<C-u>zz")
 
-vim.keymap.set("v", "<space>x", ":lua<CR>")
-vim.keymap.set("n", "<Tab>", ":bnext<CR>", { silent = true })
-vim.keymap.set("t", "<Esc>", [[<c-\><c-n>]])
-vim.keymap.set("t", "jk", [[<c-\><c-n>]])
-vim.keymap.set("n", "<leader>sz", ":lua Snacks.picker.zoxide()<CR>")
+vim.keymap.set("v", "<space>x"       , ":lua<CR>")
+vim.keymap.set("n", "<Tab>"          , ":bnext<CR>", { silent = true })
+vim.keymap.set("t", "<Esc>"          , [[<c-\><c-n>]])
+vim.keymap.set("t", "jk"             , [[<c-\><c-n>]])
+vim.keymap.set("n", "<leader>sz"     , ":lua Snacks.picker.zoxide()<CR>")
 
 vim.keymap.set("n", "<leader>O", function()
 	local count = vim.v.count1
-	local keys = ""
+	local keys  = ""
 
 	for _ = 1, count - 1 do
 		keys = keys .. "O<Esc>"
@@ -325,8 +342,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			end)
 		end
 
-		vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-		vim.keymap.set("v", "<leader>ca", vim.lsp.buf.code_action, opts)
+		vim.keymap.set({"n","v"}, "<leader>ca", vim.lsp.buf.code_action, opts)
 	end,
 })
 
@@ -341,18 +357,18 @@ end, { expr = true, silent = true })
 
 -- Normal line numbers (relative ones)
 vim.api.nvim_set_hl(0, "LineNrAbove", {
-	fg = "#565f89",
+	fg   = "#565f89",
 	bold = true,
 })
 
 -- Normal line numbers (relative ones)
 vim.api.nvim_set_hl(0, "LineNrBelow", {
-	fg = "#565f89",
+	fg   = "#565f89",
 	bold = true,
 })
 -- Current line number
 vim.api.nvim_set_hl(0, "CursorLineNr", {
-	fg = "#7aa2f7", -- tokyo night blue
+	fg   = "#7aa2f7", -- tokyo night blue
 	bold = true,
 })
 -- NOTE:
@@ -360,10 +376,9 @@ vim.api.nvim_set_hl(0, "CursorLineNr", {
 vim.opt.list = true
 
 vim.opt.listchars = {
-	lead = "·",
-	tab = "→ ",
-	trail = "·",
-}
+	lead  = "·",
+	tab   = "→ ",
+	trail = "·", }
 --
 --
 --
