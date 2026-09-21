@@ -1,9 +1,9 @@
 -- Hey future Kaish you have to consistentily comment and maintain this init file and please mention things you are forgetting or hard to recall after sometime of inpractice at the end of this file
--- TODO : 1. Remove the unnecessary old commented codes 
--- TODO : 2. Write the new <leader>rm language-aware
--- TODO : 3. Write the runner.lua to populate quickfix using the errorformat
--- TODO : 4. Remove the unnecessary old commented codes 
--- TODO : 5. Remove the unnecessary
+-- TODO: 1. Remove the unnecessary old commented codes 
+-- TODO: 2. Write the new <leader>rm language-aware
+-- TODO: 3. Write the runner.lua to populate quickfix using the errorformat
+-- TODO: 4. Remove the unnecessary old commented codes 
+-- TODO: 5. Remove the unnecessary
 vim.loader.enable()
 print("advent of neovim")
 
@@ -24,8 +24,8 @@ vim.env.PATH    = mason_bin .. ":" .. vim.env.PATH
 
 -- Some minnue performance tweaks
 -- disable slow runtime plugins
--- vim.g.loaded_netrw = 1
--- vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrw             = 1
+vim.g.loaded_netrwPlugin       = 1
 vim.g.loaded_gzip              = 1
 vim.g.loaded_tarPlugin         = 1
 vim.g.loaded_zipPlugin         = 1
