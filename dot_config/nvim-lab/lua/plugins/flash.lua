@@ -1,8 +1,13 @@
 return {
 	"folke/flash.nvim",
-	event = "VeryLazy",
+	event = "InsertEnter",
 	---@type Flash.Config
-	opts = {},
+	opts = {
+		multi_window = true,
+		search = {
+			max_length = 1000,
+		},
+	},
 	keys = {
 		{
 			"s",
