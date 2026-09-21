@@ -2,7 +2,7 @@ return {
 	{
 		"saghen/blink.cmp",
 		-- optional: provides snippets for the snippet source
-		event = { "VeryLazy" },
+		event = { "InsertEnter" },
 		-- dependencies = { "" },
 
 		-- use a release tag to download pre-built binaries
