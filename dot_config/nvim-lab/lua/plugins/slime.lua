@@ -6,7 +6,7 @@ return {
 
 			-- Important for IPython
 			-- vim.g.slime_python_ipython = 1
-			vim.g.slime_bracketed_paste = 1
+			vim.g.slime_bracketed_paste = 0
 
 			-- keymaps
 			vim.keymap.set("x", "<leader>tsr", "<Plug>SlimeRegionSend")
