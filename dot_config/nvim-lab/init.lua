@@ -235,6 +235,29 @@ vim.keymap.set("t", "<Esc>"          , [[<c-\><c-n>]])
 vim.keymap.set("t", "jk"             , [[<c-\><c-n>]])
 vim.keymap.set("n", "<leader>sz"     , ":lua Snacks.picker.zoxide()<CR>")
 
+-- Persistance cursor postion while pasting
+vim.keymap.set("n", "p", function()
+    if vim.fn.getregtype('"') == 'v' then
+	vim.cmd.normal({"p",bang=true})
+	return
+    end
+
+    local pos = vim.api.nvim_win_get_cursor(0)
+    pos[1] = pos[1] +  1
+    vim.cmd("normal! p")
+    vim.api.nvim_win_set_cursor(0, pos)
+end, {desc = "Paste with moving cursor"})
+
+vim.keymap.set("n", "P", function()
+    if vim.fn.getregtype('"') == 'v' then
+	vim.cmd.normal({"P",bang=true})
+	return
+    end
+    local pos = vim.api.nvim_win_get_cursor(0)
+    vim.cmd("normal! P")
+    vim.api.nvim_win_set_cursor(0, pos)
+end, {desc = "Paste  without moving cursor"})
+
 vim.keymap.set("n", "<leader>O", function()
 	local count = vim.v.count1
 	local keys  = ""
