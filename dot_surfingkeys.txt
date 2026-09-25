@@ -1,0 +1,111 @@
+let speedInterval = null;
+api.mapkey('<Ctrl-Alt-s>', 'Toggle 3x video speed', function() {
+    const vid = document.querySelector('video');
+
+    if (!vid) {
+        api.Front.showStatus('No video found');
+        return;
+    }
+
+    if (speedInterval === null) {
+        speedInterval = setInterval(() => {
+            vid.playbackRate = 3.0;
+        }, 900);
+
+        vid.playbackRate = 3.0;
+        api.Front.showStatus('3x speed: ON');
+    } else {
+        clearInterval(speedInterval);
+        speedInterval = null;
+
+        vid.playbackRate = 2.0;
+        api.Front.showStatus('3x speed: OFF');
+    }
+});
+api.mapkey('<Ctrl-Alt-f>', 'Youtube Fullscreen', function() {
+   document.querySelector('.ytp-fullscreen-button').click() 
+   api.Front.showBanner('FULLSCREEN',1500);
+});
+// an example to create a new mapping `ctrl-y`
+api.mapkey('<Ctrl-y>', 'Show me the money', function() {
+    api.Front.showPopup('a well-known phrase uttered by characters in the 1996 film Jerry Maguire (Escape to close).');
+});
+
+// an example to replace `T` with `gt`, click `Default mappings` to see how `T` works.
+api.map('gt', 'T');
+
+// an example to remove mapkey `Ctrl-i`
+api.unmap('<Ctrl-i>');
+
+// hints theme
+api.Hints.style(`
+    font-family: "JetBrains Mono" !important;
+    color: white !important;
+    background: black !important;
+    font-size: 16px !important;
+    font-weight: 350 !important;
+    width : 25px;
+    height : 25px;
+    display : flex;
+    justify-content : center;
+    align-items : center;
+    border: 1px solid white !important;
+    border-radius: 0px !important;
+`);
+
+// set theme
+settings.theme = `
+.sk_theme {
+    font-family: JetBrains Mono;
+    font-size: 16px;
+    background: black;
+    color: white;
+}
+.sk_theme tbody {
+    color: #fff;
+}
+.sk_theme input {
+    color: #d0d0d0;
+}
+.sk_theme .url {
+    color: #61afef;
+}
+.sk_theme .annotation {
+    color: white;
+    font-size : 25px;
+    font-weight : 350;
+}
+.sk_theme .omnibar_highlight {
+    color: #528bff;
+}
+.sk_theme .omnibar_timestamp {
+    color: #e5c07b;
+}
+.sk_theme .omnibar_visitcount {
+    color: #98c379;
+}
+.sk_theme #sk_omnibarSearchResult ul li:nth-child(odd) {
+    background: #303030;
+}
+.sk_theme #sk_omnibarSearchResult ul li.focused {
+    background: #3e4452;
+}
+#sk_status, #sk_find {
+    font-size: 16px;
+}
+#sk_banner {
+
+    background: #1e1e2e;
+    weight : 20px;
+    height : 20px;
+    color: #cdd6f4;
+    border: none;
+    border-radius: 8px;
+    font-family: JetBrains Mono;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 8px 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+`;
+// click `Save` button to make above settings to take effect.
