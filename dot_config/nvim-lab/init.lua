@@ -237,25 +237,43 @@ vim.keymap.set("n", "<leader>sz"     , ":lua Snacks.picker.zoxide()<CR>")
 
 -- Persistance cursor postion while pasting
 vim.keymap.set("n", "p", function()
+
+    local count = vim.v.count1
+
     if vim.fn.getregtype('"') == 'v' then
-	vim.cmd.normal({"p",bang=true})
+
+	vim.cmd.normal({count .. "p",bang=true})
 	return
+
     end
 
     local pos = vim.api.nvim_win_get_cursor(0)
-    pos[1] = pos[1] +  1
-    vim.cmd("normal! p")
+
+    pos[1] = pos[1] +  count
+
+    vim.cmd.normal({count .. "p",bang=true})
+
     vim.api.nvim_win_set_cursor(0, pos)
+
 end, {desc = "Paste with moving cursor"})
 
 vim.keymap.set("n", "P", function()
+
+    local count = vim.v.count1
+
     if vim.fn.getregtype('"') == 'v' then
-	vim.cmd.normal({"P",bang=true})
+
+	vim.cmd.normal({count .. "P",bang=true})
 	return
+
     end
+
     local pos = vim.api.nvim_win_get_cursor(0)
-    vim.cmd("normal! P")
+
+	vim.cmd.normal({count .. "P",bang=true})
+
     vim.api.nvim_win_set_cursor(0, pos)
+
 end, {desc = "Paste  without moving cursor"})
 
 vim.keymap.set("n", "<leader>O", function()
