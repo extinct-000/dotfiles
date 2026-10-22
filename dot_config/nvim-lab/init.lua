@@ -214,7 +214,7 @@ vim.diagnostic.config({
 vim.opt.number           = true
 vim.opt.relativenumber   = true
 vim.opt.cursorline       = true
-vim.opt.guicursor        = table.concat({ "n-v-c:block", "i:block", "r:block" }, ",")
+vim.opt.guicursor        = table.concat({"n-v-c:block-CursorNormal", "i:block-CursorInsert", "r:block-CursorReplace"}, ",")
 vim.opt.undofile         = true
 vim.opt.signcolumn       = "yes:1"
 -- vim.opt.statuscolumn  = "%l  "
@@ -419,7 +419,12 @@ vim.opt.list = true
 vim.opt.listchars = {
 	lead  = "·",
 	tab   = "→ ",
-	trail = "·", }
+	trail = "·",
+}
+vim.api.nvim_set_hl(0, "CursorInsert", {
+    fg = "#1a1b26",
+    bg = "#f7d200",
+})
 --
 --
 --
