@@ -421,7 +421,7 @@ vim.opt.listchars = {
 	tab   = "→ ",
 	trail = "·",
 }
-vim.api.nvim_set_hl(0, "CursorInsert", {
+vim.api.nvim_set_hl(0, "CursorNormal", {
     fg = "#1a1b26",
     bg = "#f7d200",
 })
